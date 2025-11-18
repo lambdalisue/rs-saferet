@@ -5,6 +5,7 @@ edition = "2021"
 rust-version = "1.84"
 authors = ["Alisue <lambdalisue@gmail.com>"]
 license = "MIT"
+description = "Secure types for handling sensitive data in Rust with automatic memory cleanup and protection against accidental exposure"
 repository = "https://github.com/lambdalisue/rs-saferet"
 
 [features]
