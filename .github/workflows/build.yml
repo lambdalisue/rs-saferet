@@ -1,0 +1,45 @@
+name: "Build"
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # https://zenn.dev/mierune/articles/2af7b9e447712a
+      - uses: chetan/git-restore-mtime-action@v2
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: clippy, rustfmt
+          cache-workspace-crates: "true"
+      - run: cargo check --all-features --all-targets
+      - run: cargo clippy --all-features --all-targets
+      - run: cargo fmt --check
+    timeout-minutes: 5
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # https://zenn.dev/mierune/articles/2af7b9e447712a
+      - uses: chetan/git-restore-mtime-action@v2
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - run: cargo test --all-features --all-targets
+    timeout-minutes: 15
+
+  build:
+    needs: ["check", "test"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # https://zenn.dev/mierune/articles/2af7b9e447712a
+      - uses: chetan/git-restore-mtime-action@v2
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+      - run: cargo build --release
+    timeout-minutes: 15
