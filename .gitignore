@@ -1,0 +1,9 @@
+# Development
+.env
+.worktrees
+
+# rust projects
+target/
+
+# OS
+.DS_Store

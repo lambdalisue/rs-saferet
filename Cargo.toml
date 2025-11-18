@@ -1,0 +1,18 @@
+[package]
+name = "saferet"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.84"
+authors = ["Alisue <lambdalisue@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/lambdalisue/rs-saferet"
+
+[features]
+default = ["constant-time-eq", "serde"]
+constant-time-eq = ["dep:subtle"]
+serde = ["dep:serde"]
+
+[dependencies]
+serde = { version = "1", features = ["derive"], optional = true }
+zeroize = { version = "1.8", features = ["derive"] }
+subtle = { version = "2", optional = true }
